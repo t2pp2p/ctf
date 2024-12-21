@@ -1,0 +1,11 @@
+.markdown-preview-view .red-text {
+  color: red;
+}
+
+.markdown-preview-view .blue-text {
+  color: blue;
+}
+
+.markdown-preview-view .green-text {
+  color: green;
+}

@@ -1,0 +1,6 @@
+/* Giữ xuống dòng khi cần và tạo thanh cuộn ngang khi nội dung dài */
+.markdown-preview-view pre code {
+  white-space: pre-wrap !important;  /* Giữ xuống dòng khi cần */
+  word-wrap: break-word !important;  /* Đảm bảo từ dài không bị cắt */
+  overflow-x: auto !important;       /* Hiển thị thanh cuộn ngang nếu cần */
+}
