@@ -38,7 +38,7 @@ Add to `/etc/hosts` file
 
 `Heal` is perhaps best envisioned as a tool for people who need to create or manage professional resumes.
 
-![[Pasted image 20241221082105.png]]
+![[1.png]]
 
 #### <span style="color: #ebe134;">Subs</span>
 
@@ -77,11 +77,11 @@ api                     [Status: 200, Size: 12515, Words: 469, Lines: 91, Durati
 
 Go to `http://api.heal.htb`
 
-![[Pasted image 20241221084733.png]]
+![[2.png]]
 
 Access via page redirect after login `http://take-survey.heal.htb/index.php/552933?lang=en`
 
-![[Pasted image 20241221122003.png]]
+![[10.png]]
 
 I then found a login page when I appended `/admin` to the end of the path and was redirected to:
 `http://take-survey.heal.htb/index.php/admin/authentication/sa/login`
@@ -116,7 +116,7 @@ I then found a login page when I appended `/admin` to the end of the path and wa
 00:42:28.009664 [0-0] * Connection #0 to host take-survey.heal.htb left intact
 ```
 
-![[Pasted image 20241221124602.png]]
+![[11.png]]
 
 It doesn't seem exploitable at first, we'll note them later.
 
@@ -125,15 +125,15 @@ It doesn't seem exploitable at first, we'll note them later.
 
 When you export the `.pdf` file and check the progress on `Burpsuite` you will see this:
 
-![[Pasted image 20241221091934.png]]
+![[4.png]]
 
 I'll try downloading `/etc/passwd` to see if LFI actually exists here.
 
-![[Pasted image 20241221095653.png]]
+![[5.png]]
 
 And **BUMP!** I saw the contents of `/etc/passwd`
 
-![[Pasted image 20241221101940.png]]
+![[6.png]]
 
 ```zsh
 ❯ cat heal_passwd | grep -v "nologin"
@@ -154,15 +154,15 @@ Pay attention to user `ron`, next we will search for information through LFI to 
 
 `ChatGPT` is useful now to quickly get the `Rails` directory structure, we know this already because we visited `api.heal.htb` earlier
 
-![[Pasted image 20241221102834.png]]
+![[8.png]]
 
 I found its correct home directory.
 
-![[Pasted image 20241221102624.png]]
+![[7.png]]
 
 Suggestions from `ChatGPT`
 
-![[Pasted image 20241221103559.png]]
+![[9.png]]
 
 In `config/database.yml` I found: `database: storage/development.sqlite3`, it was a mess and finally this is the result:
 
@@ -200,7 +200,7 @@ $2a$12$dUZ/O7KJT3.zE4TOK8p4RuxH3t.Bz45DSr7A94VLvY9SWx1GCSZnG:147258369
 
 I tried ssh with user `ron` but it failed. So now I'll go back to the previous login page where we found `ralph:147258369`.
 
-![[Pasted image 20241221125013.png]]
+![[12.png]]
 
 ### <span style="color: #3498eb;">Foot hold</span>
 
@@ -239,7 +239,7 @@ First create a `config.xml` file and change its version to 6.6.4
 
 And a file to get the reverse shell, you can customize it.
 
-![[Pasted image 20241221145855.png]]
+![[16.png]]
 
 ```zsh
 ❯ ll
@@ -253,7 +253,7 @@ total 12
 
 Go to `http://take-survey.heal.htb/index.php/admin/pluginmanager/sa/index` upload and install the `rev.zip` file.
 
-![[Pasted image 20241221132308.png]]
+![[13.png]]
 
 The other side:
 
@@ -337,7 +337,7 @@ Forward it to my machine:
 
 Check to see if there is anything exploitable. Found that this is `Consul v1.19.2`
 
-![[Pasted image 20241221141049.png]]
+![[14.png]]
 
 ### <span style="color: #3498eb;">Exploit </span>
 
@@ -366,4 +366,4 @@ id
 uid=0(root) gid=0(root) groups=0(root)
 ```
 
-![[Pasted image 20241221143625.png]]
+![[15.png]]

@@ -20,6 +20,18 @@
               "icon": "lucide-file",
               "title": "HackTheBox Heal"
             }
+          },
+          {
+            "id": "98046959db794dec",
+            "type": "leaf",
+            "state": {
+              "type": "image",
+              "state": {
+                "file": "3.png"
+              },
+              "icon": "lucide-image",
+              "title": "3"
+            }
           }
         ]
       }
@@ -164,19 +176,20 @@
   },
   "active": "25e5351e1ae35b25",
   "lastOpenFiles": [
-    "Untitled.md",
+    "3.png",
+    "10.png",
+    "11.png",
+    "12.png",
     "HackTheBox Heal.md",
-    "[.md",
-    "Pasted image 20241221145855.png",
-    "Pasted image 20241221143625.png",
-    "Pasted image 20241221141049.png",
-    "Pasted image 20241221132308.png",
-    "Pasted image 20241221125013.png",
-    "Pasted image 20241221124602.png",
+    "Pasted image 20241221082105.png",
+    "Pasted image 20241221091934.png",
     "Pasted image 20241221122003.png",
-    "Pasted image 20241221103559.png",
-    "Pasted image 20241221102834.png",
-    "Pasted image 20241221102624.png",
+    "Pasted image 20241221125013.png",
+    "Pasted image 20241221145855.png",
+    "Pasted image 20241221124602.png",
+    "Pasted image 20241221132308.png",
+    "Untitled.md",
+    "[.md",
     "custom-colors.css.md",
     "Welcome.md"
   ]

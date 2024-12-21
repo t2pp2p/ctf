@@ -61,5 +61,5 @@
   "pandocPath": {
     "win32": "C:\\Program Files\\Pandoc\\pandoc.exe"
   },
-  "lastExportType": "Markdown (Hugo)"
+  "lastExportType": "Html"
 }
