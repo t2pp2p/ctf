@@ -116,7 +116,7 @@ I then found a login page when I appended `/admin` to the end of the path and wa
 00:42:28.009664 [0-0] * Connection #0 to host take-survey.heal.htb left intact
 ```
 
-![[11.png]]
+![11.png](./images/11.png)
 
 It doesn't seem exploitable at first, we'll note them later.
 
