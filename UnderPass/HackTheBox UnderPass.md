@@ -65,7 +65,7 @@ I would add this line to `/etc/hosts` instead I have to remember its ip address.
 ❯ echo 10.129.41.174 underpass.htb | sudo tee -a /etc/hosts
 ```
 
-Sau đó đi bộ với `SNMP`.
+Then walk around with `SNMP`.
 
 ```zsh
 snmpwalk -c public -v1 underpass.htb
