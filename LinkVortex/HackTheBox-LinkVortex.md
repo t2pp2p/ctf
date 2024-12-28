@@ -135,7 +135,7 @@ Target: http://dev.linkvortex.htb/
 [05:37:23] 200 -  691KB - /.git/index 
 ```
 
-Use [`GitHack`][https://github.com/lijiejie/GitHack/blob/master/GitHack.py] to get the files:
+Use [`GitHack`](https://github.com/lijiejie/GitHack/blob/master/GitHack.py) to get the files:
 
 ```zsh
 ❯ python GitHack.py -u "http://dev.linkvortex.htb/.git/"
