@@ -8,20 +8,35 @@
         "type": "tabs",
         "children": [
           {
-            "id": "f7ef42ef78475360",
+            "id": "80d0d998a4798526",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "UnderPass/HackTheBox UnderPass.md",
+                "file": "Heal/HackTheBox Heal.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "HackTheBox UnderPass"
+              "title": "HackTheBox Heal"
+            }
+          },
+          {
+            "id": "3608bafdb345670c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "LinkVortex/HackTheBox-LinkVortex.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "HackTheBox-LinkVortex"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -140,10 +155,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "UnderPass/HackTheBox UnderPass.md"
+                "file": "LinkVortex/HackTheBox-LinkVortex.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of HackTheBox UnderPass"
+              "title": "Outline of HackTheBox-LinkVortex"
             }
           }
         ],
@@ -163,23 +178,26 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "f7ef42ef78475360",
+  "active": "3608bafdb345670c",
   "lastOpenFiles": [
+    "LinkVortex/images/8.png",
+    "LinkVortex/HackTheBox-LinkVortex.md",
+    "LinkVortex/images/7.png",
     "Heal/HackTheBox Heal.md",
     "UnderPass/HackTheBox UnderPass.md",
+    "LinkVortex/images/6.png",
+    "LinkVortex/images/5.png",
+    "Pasted image 20241228172419.png",
+    "LinkVortex/images/4.png",
+    "LinkVortex/images/3.png",
+    "LinkVortex/images/2.png",
+    "LinkVortex/images/1.png",
+    "LinkVortex/images",
+    "LinkVortex",
     "Heal/images",
     "UnderPass/images/1.png",
-    "UnderPass/images/6.png",
     "UnderPass/images",
-    "UnderPass/images/5.png",
-    "UnderPass/images/4.png",
-    "UnderPass/images/3.png",
-    "UnderPass/images/2.png",
-    "Heal/images/1.png",
-    "Heal/images/3.png",
     "UnderPass",
-    "Heal/images/14.png",
-    "Heal/images/15.png",
     "Heal",
     "[.md",
     "custom-colors.css.md",

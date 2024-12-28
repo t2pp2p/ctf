@@ -216,7 +216,7 @@ Output:
 `MOSH CONNECT 60001 Ris0qk5c5Skk4FIjZmWZFw`:
 
 `MOSH CONNECT` indicates that a `Mosh` session is starting.
-`60001` is probably the UDP port the server is listening for connections from clients on.
+`60001` is probably the port the server is listening for connections from clients on.
 `Ris0qk5c5Skk4FIjZmWZFw` is definitely a session identifier, which uniquely identifies this Mosh session.
 
 Check the `mosh-server` options:
