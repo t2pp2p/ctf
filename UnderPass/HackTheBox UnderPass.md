@@ -31,7 +31,7 @@ Nmap done: 1 IP address (1 host up) scanned in 16.09 seconds
 The results from `nmap` scanning TCP show me that port 80 just says this machine is using `Apache` and is working fine, so there is no obvious attack surface, let's try UDP.
 #### <span style="color: #ebe134;">UDP</span>
 
-We can see that this is `snmp` running on UDP port 161 and we have information that the server is probably running [Daloradius][https://github.com/lirantal/daloradius] - a web administration interface for FreeRADIUS.
+We can see that this is `snmp` running on UDP port 161 and we have information that the server is probably running [Daloradius](https://github.com/lirantal/daloradius) - a web administration interface for FreeRADIUS.
 
 ```zsh
 ❯ sudo nmap -sCV -sU -T4 --min-rate 3000 -p 53,67,123,161 -oA ./nmap/underpass_udp 10.129.41.174
