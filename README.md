@@ -1,4 +1,4 @@
-# Một vài write up cho các labs trên HackTheBox
+# Some writeups HackTheBox
 
 ### [HackTheBox - Heal write up](https://github.com/t2pp2p/ctf/blob/main/Heal/HackTheBox%20Heal.md)
 
