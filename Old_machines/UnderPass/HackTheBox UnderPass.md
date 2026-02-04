@@ -139,23 +139,23 @@ I stubbornly tried to see if `Gobuster` would produce any new results but nothin
 
 Looking back at the results of `nmap` with UDP, I tried accessing `http://underpass.htb/dalorianius/`
 
-![1.png](./images/1.png)
+![1.png](Old_machines/UnderPass/images/1.png)
 
 On the official github of `dalorius`, you will see the path structure `app/operators/login.php`
 Oh this is an accessible login page, they still keep the default path.
 
-![2.png](./images/2.png)
+![2.png](Old_machines/UnderPass/images/2.png)
 
 You can log in with the default account and password `admininistrator:radius`
 
-![3.png](./images/3.png)
+![3.png](Old_machines/UnderPass/images/3.png)
 
 ## <span style="color: red; font-weight: bold;">Shell as</span> **`svcMosh`**
 ### <span style="color: #3498eb;">Crack the password</span>
 
 In the user list section you can see the user `svcMosh` and the password hash.
 
-![4.png](./images/4.png)
+![4.png](Old_machines/UnderPass/images/4.png)
 
 Cracking password with `hashcat`:
 
@@ -228,7 +228,7 @@ Usage: /usr/bin/mosh-server new [-s] [-v] [-i LOCALADDR] [-p PORT[:PORT2]] [-c C
 
 Check the mosh-server process ID.
 
-![./images/5.png](./images/5.png)
+![Old_machines/UnderPass/images/5.png](Old_machines/UnderPass/images/5.png)
 
 #### <span style="color: #ebe134;">Exploit</span>
 
@@ -289,4 +289,4 @@ export MOSH_KEY=$key
 mosh-client -# "/bin/bash" 127.0.0.1 $port
 ```
 
-![./images/6.png](./images/6.png)
+![Old_machines/UnderPass/images/6.png](Old_machines/UnderPass/images/6.png)

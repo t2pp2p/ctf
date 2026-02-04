@@ -43,7 +43,7 @@ Add to `/etc/hosts` file
 
 `LinkVortex` is probably a site that gives some ideas about computer hardware.
 
-![./images/1.png](./images/1.png)
+![Old_machines/LinkVortex/images/1.png](Old_machines/LinkVortex/images/1.png)
 
 Let's see what `robots.txt` has:
 
@@ -59,11 +59,11 @@ Disallow: /r/
 
 There is nothing interesting about checking `/sitemap.xml`
 
-![2.png](./images/2.png)
+![2.png](Old_machines/LinkVortex/images/2.png)
 
 Oh, there is a login page at `http://linkvortex.htb/ghost`
 
-![3.png](./images/3.png)
+![3.png](Old_machines/LinkVortex/images/3.png)
 
 I tried a few logins but failed.
 #### <span style="color: #ebe134;">Subs</span>
@@ -101,7 +101,7 @@ dev                     [Status: 200, Size: 2538, Words: 670, Lines: 116, Durati
 
 Go to `http://dev.linkvortex.htb/`
 
-![4.png](./images/4.png)
+![4.png](Old_machines/LinkVortex/images/4.png)
 
 Search deeper with `dirsearch`
 
@@ -223,12 +223,12 @@ Search for password in remaining file:
 
 Successfully logged in to `http://linkvortex.htb/ghost/` with credentials `admin@linkvortex.htb:OctopiFociPilfer45`
 
-![images/5.png](./images/5.png)
+![images/5.png](Old_machines/LinkVortex/images/5.png)
 
 
 In `Setting -> About Ghost` we find its version:
 
-![6.png](./images/6.png)
+![6.png](Old_machines/LinkVortex/images/6.png)
 
 
 ## <span style="color: red; font-weight: bold;">Shell as</span> **`bob`**
@@ -238,7 +238,7 @@ I found the exploit documentation for `Ghost CMS 5.58` here: https://github.com/
 
 Repair the path and exploit:
 
-![./images/7.png](./images/7.png)
+![Old_machines/LinkVortex/images/7.png](Old_machines/LinkVortex/images/7.png)
 
 I tried reading the `/etc/passwd` file
 
@@ -506,4 +506,4 @@ root@linkvortex:~#
 ```
 
 
-![./images/8.png](./images/8.png)
+![Old_machines/LinkVortex/images/8.png](Old_machines/LinkVortex/images/8.png)

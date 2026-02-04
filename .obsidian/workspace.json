@@ -27,16 +27,30 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "LinkVortex/HackTheBox-LinkVortex.md",
+                "file": "Old_machines/LinkVortex/HackTheBox-LinkVortex.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
               "title": "HackTheBox-LinkVortex"
             }
+          },
+          {
+            "id": "973933996f8a0ab3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "season_10/Facts/facts_easy_linux.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "facts_easy_linux"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -82,7 +96,8 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "alphabetical",
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -155,10 +170,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "LinkVortex/HackTheBox-LinkVortex.md"
+                "file": "season_10/Facts/facts_easy_linux.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of HackTheBox-LinkVortex"
+              "title": "Outline of facts_easy_linux"
             }
           }
         ],
@@ -170,6 +188,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:Create new base": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
@@ -178,27 +197,33 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "3608bafdb345670c",
+  "active": "66a2b44cf73aca22",
   "lastOpenFiles": [
-    "LinkVortex/images/8.png",
-    "LinkVortex/HackTheBox-LinkVortex.md",
-    "LinkVortex/images/7.png",
-    "Heal/HackTheBox Heal.md",
-    "UnderPass/HackTheBox UnderPass.md",
-    "LinkVortex/images/6.png",
-    "LinkVortex/images/5.png",
-    "Pasted image 20241228172419.png",
-    "LinkVortex/images/4.png",
-    "LinkVortex/images/3.png",
-    "LinkVortex/images/2.png",
-    "LinkVortex/images/1.png",
-    "LinkVortex/images",
-    "LinkVortex",
-    "Heal/images",
-    "UnderPass/images/1.png",
-    "UnderPass/images",
-    "UnderPass",
-    "Heal",
+    "season_10/Facts/Untitled",
+    "Old_machines",
+    "season_10/Facts/images/12.png",
+    "season_10/Facts/images/11.png",
+    "Old_machines/UnderPass/HackTheBox UnderPass.md",
+    "season_10/Facts/facts_easy_linux.md",
+    "season_10/Facts/images/10.png",
+    "season_10/Facts/images/9.png",
+    "season_10/Facts/images/8.png",
+    "season_10/Facts/images/7.png",
+    "season_10/Facts/images/7.png",
+    "season_10/Facts/images/6.png",
+    "season_10/Facts/images/5.png",
+    "season_10/Facts/images/4.png",
+    "Old_machines/LinkVortex/HackTheBox-LinkVortex.md",
+    "season_10/Facts/images",
+    "season_10/Facts",
+    "season_10",
+    "Old_machines/Heal/HackTheBox Heal.md",
+    "Old_machines/LinkVortex/images",
+    "Old_machines/LinkVortex",
+    "Old_machines/Heal/images",
+    "Old_machines/UnderPass/images",
+    "Old_machines/UnderPass",
+    "Old_machines/Heal",
     "[.md",
     "custom-colors.css.md",
     "Welcome.md"
