@@ -1,5 +1,3 @@
-#### by [t2p](https://app.hackthebox.com/profile/1064515)
-
 ## <span style="color: red; font-weight: bold;">Recon</span>
 ### <span style="color: #3498eb;">nmap</span>
 
@@ -38,7 +36,7 @@ Add to `/etc/hosts` file
 
 `Heal` is perhaps best envisioned as a tool for people who need to create or manage professional resumes.
 
-![Old_machines/Heal/images/1.png](Old_machines/Heal/images/1.png)
+![](images/1.png)
 
 #### <span style="color: #ebe134;">Subs</span>
 
@@ -77,11 +75,11 @@ api                     [Status: 200, Size: 12515, Words: 469, Lines: 91, Durati
 
 Go to `http://api.heal.htb`
 
-![Old_machines/Heal/images/2.png](Old_machines/Heal/images/2.png)
+![](images/2.png)
 
 Access via page redirect after login `http://take-survey.heal.htb/index.php/552933?lang=en`
 
-![10.png](Old_machines/Heal/images/10.png)
+![](images/10.png)
 
 I then found a login page when I appended `/admin` to the end of the path and was redirected to:
 `http://take-survey.heal.htb/index.php/admin/authentication/sa/login`
@@ -116,7 +114,7 @@ I then found a login page when I appended `/admin` to the end of the path and wa
 00:42:28.009664 [0-0] * Connection #0 to host take-survey.heal.htb left intact
 ```
 
-![11.png](Old_machines/Heal/images/11.png)
+![](images/11.png)
 
 It doesn't seem exploitable at first, we'll note them later.
 
@@ -125,15 +123,15 @@ It doesn't seem exploitable at first, we'll note them later.
 
 When you export the `.pdf` file and check the progress on `Burpsuite` you will see this:
 
-![Old_machines/Heal/images/4.png](Old_machines/Heal/images/4.png)
+![](images/4.png)
 
 I'll try downloading `/etc/passwd` to see if LFI actually exists here.
 
-![Old_machines/Heal/images/5.png](Old_machines/Heal/images/5.png)
+![](images/5.png)
 
 And **BUMP!** I saw the contents of `/etc/passwd`
 
-![Old_machines/Heal/images/6.png](Old_machines/Heal/images/6.png)
+![](images/6.png)
 
 ```zsh
 ❯ cat heal_passwd | grep -v "nologin"
@@ -154,15 +152,15 @@ Pay attention to user `ron`, next we will search for information through LFI to 
 
 `ChatGPT` is useful now to quickly get the `Rails` directory structure, we know this already because we visited `api.heal.htb` earlier
 
-![8.png](Old_machines/Heal/images/8.png)
+![](images/8.png)
 
 I found its correct home directory.
 
-![7.png](Old_machines/Heal/images/7.png)
+![](images/7.png)
 
 Suggestions from `ChatGPT`
 
-![9.png](Old_machines/Heal/images/9.png)
+![](images/9.png)
 
 In `config/database.yml` I found: `database: storage/development.sqlite3`, it was a mess and finally this is the result:
 
@@ -200,8 +198,8 @@ $2a$12$dUZ/O7KJT3.zE4TOK8p4RuxH3t.Bz45DSr7A94VLvY9SWx1GCSZnG:147258369
 
 I tried ssh with user `ron` but it failed. So now I'll go back to the previous login page where we found `ralph:147258369`.
 
-![12.png](Old_machines/Heal/images/12.png)
 
+![](images/12.png)
 ### <span style="color: #3498eb;">Foot hold</span>
 
 I found the exploit documentation for [LimeSurvey Community Edition Version 6.6.4][https://community.limesurvey.org/]
@@ -253,7 +251,7 @@ total 12
 
 Go to `http://take-survey.heal.htb/index.php/admin/pluginmanager/sa/index` upload and install the `rev.zip` file.
 
-![13.png](Old_machines/Heal/images/13.png)
+![](images/13.png)
 
 The other side:
 
@@ -337,7 +335,7 @@ Forward it to my machine:
 
 Check to see if there is anything exploitable. Found that this is `Consul v1.19.2`
 
-![14.png](Old_machines/Heal/images/14.png)
+![](images/14.png)
 
 ### <span style="color: #3498eb;">Exploit </span>
 

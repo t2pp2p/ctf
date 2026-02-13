@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "season_10/Pterodactyl/Pterodactyl.md",
+                "file": "Old_machines/UnderPass/HackTheBox UnderPass.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Pterodactyl"
+              "title": "HackTheBox UnderPass"
             }
           }
         ],
@@ -170,13 +170,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "season_10/Pterodactyl/Pterodactyl.md",
+                "file": "Old_machines/UnderPass/HackTheBox UnderPass.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Pterodactyl"
+              "title": "Outline of HackTheBox UnderPass"
             }
           }
         ],
@@ -199,31 +199,30 @@
   },
   "active": "c69dc9dc59510317",
   "lastOpenFiles": [
-    "9.png",
+    "Old_machines/LinkVortex/HackTheBox-LinkVortex.md",
+    "Old_machines/UnderPass/HackTheBox UnderPass.md",
+    "Old_machines/Heal/HackTheBox Heal.md",
+    "Old_machines/Heal/images/16.png",
+    "Old_machines/Heal/images/15.png",
+    "Old_machines/LinkVortex/images/7.png",
+    "season_10/Pterodactyl/Pterodactyl.md",
+    "season_10/Pterodactyl/images/10.png",
+    "season_10/Pterodactyl/images/11.png",
+    "Pasted image 20260213102501.png",
+    "season_10/Pterodactyl/images/9.png",
     "season_10/Pterodactyl/images/8.png",
     "season_10/Pterodactyl/images/7.png",
     "season_10/Pterodactyl/images/6.png",
-    "season_10/Pterodactyl/images/5.png",
-    "season_10/Pterodactyl/images/4.png",
-    "season_10/Pterodactyl/images/3.png",
-    "season_10/Pterodactyl/images/2.png",
-    "season_10/Pterodactyl/images/1.png",
-    "season_10/Pterodactyl/Pterodactyl.md",
     "season_10/Facts/facts_easy_linux.md",
     "season_10/Pterodactyl/images",
     "season_10/Pterodactyl",
     "Untitled.base",
-    "Old_machines/LinkVortex/HackTheBox-LinkVortex.md",
     "season_10/Facts/Untitled",
     "Old_machines",
-    "season_10/Facts/images/12.png",
-    "season_10/Facts/images/11.png",
-    "Old_machines/UnderPass/HackTheBox UnderPass.md",
     "season_10/facts_easy_linux.md",
     "season_10/Facts/images",
     "season_10/Facts",
     "season_10",
-    "Old_machines/Heal/HackTheBox Heal.md",
     "Old_machines/LinkVortex/images",
     "Old_machines/LinkVortex",
     "[.md",

